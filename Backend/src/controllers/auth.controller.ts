@@ -1,9 +1,12 @@
+import type { Request, Response} from 'express'
+import type { AuthRequest } from '../types.js'
+
 import { userModel } from '../models/user.model.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
 import { APIResponse } from '../utils/apiResponse.js';
 import { APIError } from '../utils/apiError.js';
 
-const register = asyncHandler(async(req, res) => {
+const register = asyncHandler(async(req: Request, res: Response): Promise<void> => {
     const {fullname, username, email, password} = req.body;
 
     if([fullname, username, email, password].some(cred => typeof cred !== "string" || cred.trim() === "")){
@@ -22,9 +25,9 @@ const register = asyncHandler(async(req, res) => {
 
     const doesUserAlreadyExists = await userModel.findOne({
         $or: [{
-            username
+            username: noramlizedUsername
         }, {
-            email
+            email: noramlizedEmail
         }]
     })
 
@@ -39,15 +42,14 @@ const register = asyncHandler(async(req, res) => {
         password
     })
 
-    const createdUser = user.toObject();
-    delete createdUser.password
+    const { password: _, ...createdUser } = user.toObject();
 
     res
     .status(201)
     .json(new APIResponse(201, createdUser, "User Registered Successfully"))
 })
 
-const login = asyncHandler(async(req, res) => {
+const login = asyncHandler(async(req: Request, res: Response): Promise<void> => {
     const {email, password} = req.body;
 
     if([email, password].some(cred => typeof cred !== "string" || cred.trim() === "")){
@@ -70,8 +72,7 @@ const login = asyncHandler(async(req, res) => {
 
     const accessToken = await user.generateAccessToken()
 
-    const loggedUser = user.toObject()
-    delete loggedUser.password
+    const {password: _, ...loggedUser} = user.toObject()
 
     res
     .status(200)
@@ -82,7 +83,7 @@ const login = asyncHandler(async(req, res) => {
     .json(new APIResponse(200, loggedUser, "User LoggedIn SuccessFully!"))
 })
 
-const getMe = asyncHandler(async(req, res) => {
+const getMe = asyncHandler(async(req: AuthRequest, res: Response): Promise<void> => {
     const user = req.user
 
     if(!user){
@@ -100,7 +101,7 @@ const getMe = asyncHandler(async(req, res) => {
     .json(new APIResponse(200, foundUser, "User Details Retrieved Successfully!"))
 })
 
-const logout = asyncHandler(async(req, res) => {
+const logout = asyncHandler(async(req:Request, res: Response): Promise<void> => {
     res
     .clearCookie("accessToken", {
         httpOnly: true
@@ -111,6 +112,7 @@ const logout = asyncHandler(async(req, res) => {
 
 
 export {
+    AuthRequest,
     register,
     login,
     getMe,

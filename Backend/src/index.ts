@@ -9,12 +9,12 @@ connectDB().then(() => {
     app.listen(port, () => {
         console.log(`Server is running on port ${port}`)
     })
-    .on('error', (error) => {
+    .on('error', (error: unknown) => {
         console.log('Error in connecting to the database', error)
         process.exit(1)
     })
 })
-.catch((error) => {
+.catch((error: unknown) => {
     console.log('Error in starting the server', error)
     process.exit(1)
 })

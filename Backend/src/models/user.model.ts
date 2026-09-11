@@ -1,8 +1,11 @@
-import mongoose, {Schema} from 'mongoose'
+import type { UserDocument } from '../types.js'
+
+import mongoose, {Schema, Document, Types} from 'mongoose'
 import jwt from 'jsonwebtoken'
 import bcrypt from 'bcryptjs'
 
-const userSchema = new Schema({
+
+const userSchema = new Schema<UserDocument>({
     fullname: {
         type: String,
         required: [true, "FullName Is Required"],
@@ -34,18 +37,28 @@ userSchema.pre('save', async function() {
 })
 
 userSchema.methods.generateAccessToken = function() {
+    const secret = process.env.TOKEN_SECRET;
+    const expiry = process.env.TOKEN_EXPIRY_TIME;
+
+    if (!secret) {
+        throw new Error("TOKEN_SECRET is not defined");
+    }
+    if (!expiry) {
+        throw new Error("TOKEN_EXPIRY_TIME is not defined");
+    }
+
     return jwt.sign({
-        _id: this._id,
+        _id: this._id.toString(),
         email: this.email
     },
-    process.env.TOKEN_SECRET,
+    secret as string,
     {
-        expiresIn: process.env.TOKEN_EXPIRY_TIME
+        expiresIn: expiry as any
     }
 )
 }
 
-userSchema.methods.isPasswordCorrect = async function(password) {
+userSchema.methods.isPasswordCorrect = async function(password: string): Promise<boolean> {
     return await bcrypt.compare(password, this.password);
 }
 
