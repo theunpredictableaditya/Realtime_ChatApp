@@ -14,7 +14,9 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
 // Routes
+import userRouter from "./routes/auth.route.js"
 
+app.use("/api/v1", userRouter)
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500
