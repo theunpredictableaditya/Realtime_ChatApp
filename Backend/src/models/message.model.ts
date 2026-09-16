@@ -34,4 +34,9 @@ const MessageSchema = new Schema<MessageDocument>({
     timestamps: true
 })
 
-export const messageModel = mongoose.model("MESSAGE", MessageSchema)
+const messageModel = mongoose.model("MESSAGE", MessageSchema)
+
+export {
+    MessageDocument,
+    messageModel
+}

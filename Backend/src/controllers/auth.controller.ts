@@ -112,7 +112,6 @@ const logout = asyncHandler(async(req:Request, res: Response): Promise<void> => 
 
 
 export {
-    AuthRequest,
     register,
     login,
     getMe,

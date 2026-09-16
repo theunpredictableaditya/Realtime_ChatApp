@@ -4,7 +4,7 @@ import { Document, Types } from "mongoose"
 
 interface AuthRequest extends Request {
     user? : {
-        _id: string;
+        _id: Types.ObjectId;
         [key: string]: any;
     }
 }
