@@ -1,5 +1,5 @@
 import { Router} from 'express'
-import { sendMessage } from '../controllers/message.controller.js'
+import { sendMessage, getMessages } from '../controllers/message.controller.js'
 import { verifyJWT } from '../middlewares/auth.middleware.js'
 
 const router = Router()
@@ -7,6 +7,11 @@ const router = Router()
 router.route("/send-message").post(
     verifyJWT,
     sendMessage
+)
+
+router.route("/:conversationId/get-messages").get(
+    verifyJWT,
+    getMessages
 )
 
 

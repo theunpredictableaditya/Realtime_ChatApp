@@ -24,8 +24,11 @@ interface UserDocument extends Document {
     isPasswordCorrect: (password: string) => Promise<boolean>;
 }
 
+type MessageType = 'text' | 'image' | 'video' | 'file'
+
 export {
     AuthRequest,
     DecodedToken,
-    UserDocument
+    UserDocument,
+    MessageType
 }

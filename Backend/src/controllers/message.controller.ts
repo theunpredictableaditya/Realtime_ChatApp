@@ -4,13 +4,13 @@ import { APIError } from "../utils/apiError.js";
 import { conversationModel } from "../models/conversation.model.js";
 import { messageModel, MessageDocument } from "../models/message.model.js";
 
-import type { AuthRequest } from "../types.js";
+import type { AuthRequest, MessageType } from "../types.js";
 import { Types } from "mongoose";
+import type { QueryFilter } from "mongoose";
 import { Response } from "express";
 import { APIResponse } from "../utils/apiResponse.js";
 import { userModel } from "../models/user.model.js";
 
-type MessageType = 'text' | 'image' | 'video' | 'file'
 
 const MessageCreateFunction = async(conversationId: Types.ObjectId, senderId: Types.ObjectId, content: string, messageType: MessageType = 'text'): Promise<MessageDocument> => {
     const createMessage = await messageModel.create({
@@ -79,6 +79,81 @@ const sendMessage = asyncHandler(async (req: AuthRequest, res: Response): Promis
     .json(new APIResponse(201, message, "Message Delivered Successfully!"))
 })
 
+const getMessages = asyncHandler(async (req: AuthRequest, res: Response): Promise<void> => {
+    const user = req.user
+
+    if(!user) {
+        throw new APIError(401, "Authentication Required!")
+    }
+
+    const { conversationId } = req.params as {
+        conversationId: string
+    }
+
+    if(!conversationId){
+        throw new APIError(400, "Conversation Id Is Required!")
+    }
+
+    if(!Types.ObjectId.isValid(conversationId)){
+        throw new APIError(400, "Invalid Conversation Id!")
+    }
+
+    const conversation = await conversationModel.findOne({
+        _id: conversationId,
+        participants: user._id
+    })
+
+    if(!conversation){
+        throw new APIError(404, "Conversation Not Found!")
+    }
+
+    const limit = Math.min( Number(req.query.limit)  || 50, 100);
+
+    const before = req.query.before as string | undefined;
+
+    const query: QueryFilter<MessageDocument> = {
+        conversation: conversation._id
+    }
+
+    if(before){
+        if(!Types.ObjectId.isValid(before)){
+            throw new APIError(400, "Invalid Cursor!")
+        }
+
+        query._id = {
+            $lt: new Types.ObjectId(before)
+        }
+    }
+
+    const messages = await messageModel
+    .find(query)
+    .sort({_id: -1})
+    .limit(limit + 1)
+
+    const hasMore = messages.length > limit
+
+    if(hasMore){
+        messages.pop()
+    }
+
+    messages.reverse()
+
+    const nextCursor = hasMore ? messages[0]?._id : null
+
+    res
+    .status(200)
+    .json(
+        new APIResponse(200, {
+            messages,
+            nextCursor,
+            hasMore
+        },
+        "Message Fetched Successfully!"
+    )
+    )
+})
+
 export {
-    sendMessage
+    sendMessage,
+    getMessages
 }
