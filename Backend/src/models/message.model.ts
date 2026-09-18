@@ -16,8 +16,8 @@ const MessageSchema = new Schema<MessageDocument>({
         required: true
     },
     sender : {
-        types: Schema.Types.ObjectId,
-        ref: 'USER',
+        type: Schema.Types.ObjectId,
+        ref: "USER",
         required: true
     },
     content: {

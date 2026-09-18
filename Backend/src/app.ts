@@ -20,7 +20,7 @@ import userRouter from "./routes/auth.route.js"
 import messageRouter from "./routes/message.route.js"
 
 app.use("/api/auth/v1", userRouter)
-app.use("api/message/v1", messageRouter)
+app.use("/api/message/v1", messageRouter)
 
 app.use((err: unknown, req: Request, res: Response, next: NextFunction) => {
     if(err instanceof APIError){

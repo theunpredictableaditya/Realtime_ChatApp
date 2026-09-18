@@ -4,7 +4,7 @@ import { verifyJWT } from '../middlewares/auth.middleware.js'
 
 const router = Router()
 
-router.route("/message").post(
+router.route("/send-message").post(
     verifyJWT,
     sendMessage
 )
