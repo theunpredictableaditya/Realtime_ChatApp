@@ -37,3 +37,9 @@ export const getMe = async() => {
 
     return response.data
 }
+
+export const logout = async() => {
+    const response = await api.post("/api/auth/v1/logout")
+
+    return response.data
+}
