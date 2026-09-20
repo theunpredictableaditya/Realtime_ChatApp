@@ -16,15 +16,19 @@ interface AuthContextType {
     setError :Dispatch<SetStateAction<unknown>>
 }
 
-interface RegisterUserArgument {
+interface LoginUserArgument {
+    email: string;
+    password: string;
+}
+
+interface RegisterUserArgument extends LoginUserArgument{
   username: string;
   fullname: string;
-  email: string;
-  password: string;
 }
 
 export type{
     User,
     AuthContextType,
-    RegisterUserArgument
+    RegisterUserArgument,
+    LoginUserArgument
 }

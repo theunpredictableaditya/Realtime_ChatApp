@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { RegisterUserArgument } from "../../../types";
+import type { RegisterUserArgument, LoginUserArgument } from "../../../types";
 
 const api = axios.create({
   baseURL: "http://127.0.0.1:8000",
@@ -21,3 +21,12 @@ export const register = async ({
 
   return response.data;
 };
+
+export const login = async({email, password}: LoginUserArgument) => {
+    const response = await api.post("/api/auth/v1/login", {
+        email,
+        password
+    })
+
+    return response.data
+}
