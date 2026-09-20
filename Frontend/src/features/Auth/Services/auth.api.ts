@@ -30,3 +30,10 @@ export const login = async({email, password}: LoginUserArgument) => {
 
     return response.data
 }
+
+
+export const getMe = async() => {
+    const response = await api.get("/api/auth/v1/getme")
+
+    return response.data
+}
