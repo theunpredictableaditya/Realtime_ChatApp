@@ -1,17 +1,51 @@
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import z from "zod";
+import FieldError from "../Components/FieldError";
+
+const schema = z.object({
+  fullname: z.string().trim().min(1, "Fullname is Required!"),
+  username: z
+    .string()
+    .trim()
+    .min(1, "Username is Required")
+    .max(12, "Username length must be less than 12")
+    .regex(
+      /^[a-zA-Z0-9_]+$/,
+      "Username can only contain letters, numbers, and underscores",
+    ),
+  email: z.email("Invalid Email Format!"),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters!")
+    .regex(
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/,
+      "Must contain uppercase, lowercase, number, and special character",
+    ),
+});
+
 function Register() {
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm({resolver: zodResolver(schema)})
+
+  const onSubmit = (data: any) => {
+    console.log(data)
+  }
+
   return (
     <div
       id="register"
       className="flex min-h-screen w-full items-center justify-center bg-(--color-background) p-(--space-md) font-(--font-family) text-(--color-text-primary)"
     >
-
-
       <form
         action=""
+        onSubmit={handleSubmit(onSubmit)}
         className="flex w-full max-w-100 flex-col gap-(--space-lg) rounded-(--radius-lg) bg-(--color-surface) p-(--space-xl) shadow-(--shadow-lg)"
       >
-
-
         <div className="text-center">
           <h1 className="mb-(--space-xs) text-(--font-size-xl) font-semibold">
             Create an Account
@@ -20,8 +54,6 @@ function Register() {
             Join us today to get started.
           </p>
         </div>
-
-
 
         <div>
           <div className="flex min-h-20 flex-col gap-(--space-xs)">
@@ -33,12 +65,12 @@ function Register() {
             </label>
             <input
               id="fullname"
-              name="fullname"
               type="text"
               placeholder="John Doe"
-              required
+              {...register("fullname")}
               className="w-full rounded-(--radius-md) border border-(--color-border) bg-(--color-surface-light) p-(--space-md) text-(--font-size-md) text-(--color-text-primary) outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-(--color-text-muted) focus:border-(--color-primary) focus:shadow-[0_0_0_2px_rgb(99_102_241_/_0.2)]"
             />
+            {errors.fullname?.message && <FieldError error={errors.fullname.message} />}
           </div>
 
           <div className="flex min-h-20 flex-col gap-(--space-xs)">
@@ -50,12 +82,12 @@ function Register() {
             </label>
             <input
               id="username"
-              name="username"
               type="text"
               placeholder="johndoe123"
-              required
+              {...register("username")}
               className="w-full rounded-(--radius-md) border border-(--color-border) bg-(--color-surface-light) p-(--space-md) text-(--font-size-md) text-(--color-text-primary) outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-(--color-text-muted) focus:border-(--color-primary) focus:shadow-[0_0_0_2px_rgb(99_102_241_/_0.2)]"
             />
+            {errors.username?.message && <FieldError error={errors.username.message}/>}
           </div>
 
           <div className="flex min-h-20 flex-col gap-(--space-xs)">
@@ -67,12 +99,12 @@ function Register() {
             </label>
             <input
               id="email"
-              name="email"
               type="email"
               placeholder="john@example.com"
-              required
+              {...register("email")}
               className="w-full rounded-(--radius-md) border border-(--color-border) bg-(--color-surface-light) p-(--space-md) text-(--font-size-md) text-(--color-text-primary) outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-(--color-text-muted) focus:border-(--color-primary) focus:shadow-[0_0_0_2px_rgb(99_102_241_/_0.2)]"
             />
+            {errors.email?.message && <FieldError error={errors.email.message}/>}
           </div>
 
           <div className="flex min-h-20 flex-col gap-(--space-xs)">
@@ -84,12 +116,12 @@ function Register() {
             </label>
             <input
               id="password"
-              name="password"
               type="password"
               placeholder="********"
-              required
+              {...register("password")}
               className="w-full rounded-(--radius-md) border border-(--color-border) bg-(--color-surface-light) p-(--space-md) text-(--font-size-md) text-(--color-text-primary) outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-(--color-text-muted) focus:border-(--color-primary) focus:shadow-[0_0_0_2px_rgb(99_102_241_/_0.2)]"
             />
+            {errors.password?.message && <FieldError error={errors.password.message}/>}
           </div>
 
           <button
@@ -100,7 +132,6 @@ function Register() {
           </button>
         </div>
 
-
         <div className="text-center text-(--font-size-sm) text-(--color-text-secondary)">
           Already have an account?{" "}
           <a
@@ -110,11 +141,7 @@ function Register() {
             Login
           </a>
         </div>
-
-
       </form>
-
-      
     </div>
   );
 }
