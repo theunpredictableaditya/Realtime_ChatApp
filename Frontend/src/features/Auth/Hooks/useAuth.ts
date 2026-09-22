@@ -11,7 +11,7 @@ export const useAuth = () => {
     }
 
 
-    const { setUser, setLoading, setError } = context
+    const { user, setUser, setLoading, setError } = context
 
     const handleRegister = async({username, fullname, email, password}: RegisterUserArgument) => {
         setLoading(true)
@@ -19,6 +19,7 @@ export const useAuth = () => {
             const response = await register({username, fullname, email, password})
 
             setUser(response)
+            return response.data
         } catch (error: unknown) {
             if(error instanceof Error){
                 setError(error)
@@ -83,6 +84,7 @@ export const useAuth = () => {
 
 
     return {
+        user,
         handleRegister,
         handleLogin,
         handleGetMe,

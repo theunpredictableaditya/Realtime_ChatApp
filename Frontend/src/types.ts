@@ -7,6 +7,10 @@ interface User {
     email: string
 }
 
+interface UserAuthResponse extends User {
+    __v : Number
+}
+
 interface AuthContextType {
     user: User | null
     setUser: Dispatch<SetStateAction<User | null>>
@@ -28,6 +32,7 @@ interface RegisterUserArgument extends LoginUserArgument{
 
 export type{
     User,
+    UserAuthResponse,
     AuthContextType,
     RegisterUserArgument,
     LoginUserArgument

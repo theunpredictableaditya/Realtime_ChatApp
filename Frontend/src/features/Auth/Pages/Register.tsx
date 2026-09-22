@@ -2,6 +2,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import z from "zod";
 import FieldError from "../Components/FieldError";
+import { useAuth } from "../Hooks/useAuth";
+import type { UserAuthResponse } from "../../../types";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const schema = z.object({
   fullname: z.string().trim().min(1, "Fullname is Required!"),
@@ -25,16 +29,35 @@ const schema = z.object({
 });
 
 function Register() {
+  const navigate = useNavigate();
+  const { user, handleRegister } = useAuth();
 
   const {
     register,
     handleSubmit,
-    formState: { errors }
-  } = useForm({resolver: zodResolver(schema)})
+    formState: { errors },
+  } = useForm({ resolver: zodResolver(schema) });
 
   const onSubmit = (data: any) => {
-    console.log(data)
-  }
+    ;(async () => {
+      try {
+        const response: UserAuthResponse = await handleRegister(data);
+        
+        if(user){
+          toast.success("Account Registered Successfully!", {
+            duration: 2000,
+            position: 'top-center'
+          })
+
+          setTimeout(() => {
+            navigate("/login")
+          }, 1500)
+        }
+      } catch (error) {
+        toast.error("Registration failed. Please try again.");
+      }
+    })();
+  };
 
   return (
     <div
@@ -70,7 +93,9 @@ function Register() {
               {...register("fullname")}
               className="w-full rounded-(--radius-md) border border-(--color-border) bg-(--color-surface-light) p-(--space-md) text-(--font-size-md) text-(--color-text-primary) outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-(--color-text-muted) focus:border-(--color-primary) focus:shadow-[0_0_0_2px_rgb(99_102_241_/_0.2)]"
             />
-            {errors.fullname?.message && <FieldError error={errors.fullname.message} />}
+            {errors.fullname?.message && (
+              <FieldError error={errors.fullname.message} />
+            )}
           </div>
 
           <div className="flex min-h-20 flex-col gap-(--space-xs)">
@@ -87,7 +112,9 @@ function Register() {
               {...register("username")}
               className="w-full rounded-(--radius-md) border border-(--color-border) bg-(--color-surface-light) p-(--space-md) text-(--font-size-md) text-(--color-text-primary) outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-(--color-text-muted) focus:border-(--color-primary) focus:shadow-[0_0_0_2px_rgb(99_102_241_/_0.2)]"
             />
-            {errors.username?.message && <FieldError error={errors.username.message}/>}
+            {errors.username?.message && (
+              <FieldError error={errors.username.message} />
+            )}
           </div>
 
           <div className="flex min-h-20 flex-col gap-(--space-xs)">
@@ -104,7 +131,9 @@ function Register() {
               {...register("email")}
               className="w-full rounded-(--radius-md) border border-(--color-border) bg-(--color-surface-light) p-(--space-md) text-(--font-size-md) text-(--color-text-primary) outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-(--color-text-muted) focus:border-(--color-primary) focus:shadow-[0_0_0_2px_rgb(99_102_241_/_0.2)]"
             />
-            {errors.email?.message && <FieldError error={errors.email.message}/>}
+            {errors.email?.message && (
+              <FieldError error={errors.email.message} />
+            )}
           </div>
 
           <div className="flex min-h-20 flex-col gap-(--space-xs)">
@@ -121,7 +150,9 @@ function Register() {
               {...register("password")}
               className="w-full rounded-(--radius-md) border border-(--color-border) bg-(--color-surface-light) p-(--space-md) text-(--font-size-md) text-(--color-text-primary) outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-(--color-text-muted) focus:border-(--color-primary) focus:shadow-[0_0_0_2px_rgb(99_102_241_/_0.2)]"
             />
-            {errors.password?.message && <FieldError error={errors.password.message}/>}
+            {errors.password?.message && (
+              <FieldError error={errors.password.message} />
+            )}
           </div>
 
           <button
