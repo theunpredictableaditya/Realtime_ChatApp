@@ -30,7 +30,7 @@ const schema = z.object({
 
 function Register() {
   const navigate = useNavigate();
-  const { user, handleRegister } = useAuth();
+  const { handleRegister } = useAuth();
 
   const {
     register,
@@ -39,20 +39,21 @@ function Register() {
   } = useForm({ resolver: zodResolver(schema) });
 
   const onSubmit = (data: any) => {
-    ;(async () => {
+    (async () => {
       try {
         const response: UserAuthResponse = await handleRegister(data);
-        
-        if(user){
-          toast.success("Account Registered Successfully!", {
-            duration: 2000,
-            position: 'top-center'
-          })
 
-          setTimeout(() => {
-            navigate("/login")
-          }, 1500)
-        }
+        toast.success(
+          `${response?.fullname} Registered Successfully, Please Login!`,
+          {
+            duration: 2000,
+            position: "top-center",
+          },
+        );
+
+        setTimeout(() => {
+          navigate("/login");
+        }, 1500);
       } catch (error) {
         toast.error("Registration failed. Please try again.");
       }
