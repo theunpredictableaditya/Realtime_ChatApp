@@ -167,7 +167,7 @@ function Register() {
         <div className="text-center text-(--font-size-sm) text-(--color-text-secondary)">
           Already have an account?{" "}
           <a
-            href="#"
+            href="/login"
             className="font-medium text-(--color-primary) transition-colors duration-150 hover:text-(--color-primary-hover) hover:underline"
           >
             Login
