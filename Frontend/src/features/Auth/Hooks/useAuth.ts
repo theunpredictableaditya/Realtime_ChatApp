@@ -37,6 +37,7 @@ export const useAuth = () => {
             const response = await login({email, password})
 
             setUser(response)
+            return response.data
         } catch (error: unknown) {
             if(error instanceof Error){
                 setError(error)

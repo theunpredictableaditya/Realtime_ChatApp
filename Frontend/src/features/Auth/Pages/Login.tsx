@@ -1,4 +1,57 @@
+import { useNavigate } from "react-router-dom";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import z from "zod";
+import FieldError from "../Components/FieldError";
+import { useAuth } from "../Hooks/useAuth";
+import type { UserAuthResponse } from "../../../types";
+import toast from "react-hot-toast";
+
+const schema = z.object({
+  email: z.email("Invalid Email Format!"),
+  password: z
+    .string()
+    .min(8, "Password must be at least 8 characters!")
+    .regex(
+      /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/,
+      "Must contain uppercase, lowercase, number, and special character",
+    ),
+});
+
 const Login = () => {
+  
+  const navigate = useNavigate();
+
+  const { handleLogin } = useAuth();
+
+  const {
+    register,
+    handleSubmit,
+    formState: {errors}
+  } = useForm({resolver: zodResolver(schema)})
+
+  const onSubmit = async(data: any) => {
+(async () => {
+      try {
+        const response: UserAuthResponse = await handleLogin(data);
+
+        toast.success(
+          "Account LoggedIn Successfully!",
+          {
+            duration: 2000,
+            position: "top-center",
+          },
+        );
+
+        setTimeout(() => {
+          navigate("/chats");
+        }, 1500);
+      } catch (error) {
+        toast.error("Registration failed. Please try again.");
+      }
+    })();
+  }
+
   return (
     <div
       id="login"
@@ -6,6 +59,7 @@ const Login = () => {
     >
       <form
         action=""
+        onSubmit={handleSubmit(onSubmit)}
         className="flex w-full max-w-100 flex-col gap-(--space-lg) rounded-(--radius-lg) bg-(--color-surface) p-(--space-xl) shadow-(--shadow-lg)"
       >
         <div className="text-center">
@@ -27,27 +81,30 @@ const Login = () => {
             </label>
             <input
               id="email"
-              name="email"
               type="email"
+              {...register("email")}
               placeholder="john@example.com"
               className="w-full rounded-(--radius-md) border border-(--color-border) bg-(--color-surface-light) p-(--space-md) text-(--font-size-md) text-(--color-text-primary) outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-(--color-text-muted) focus:border-(--color-primary) focus:shadow-[0_0_0_2px_rgb(99_102_241_/_0.2)]"
             />
+            {errors.email?.message && <FieldError error={errors.email.message}/>}
           </div>
 
           <div className="flex min-h-20 flex-col gap-(--space-xs)">
             <label
               htmlFor="password"
               className="text-(--font-size-sm) font-medium text-(--color-text-secondary)"
-            >
+              >
               Password
             </label>
             <input
               id="password"
-              name="password"
               type="password"
+              {...register("password")}
               placeholder="********"
               className="w-full rounded-(--radius-md) border border-(--color-border) bg-(--color-surface-light) p-(--space-md) text-(--font-size-md) text-(--color-text-primary) outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-(--color-text-muted) focus:border-(--color-primary) focus:shadow-[0_0_0_2px_rgb(99_102_241_/_0.2)]"
-            />
+              />
+
+            {errors.password?.message && <FieldError error={errors.password.message}/>}
           </div>
 
           <div className="min-h-20">
@@ -71,7 +128,7 @@ const Login = () => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;
