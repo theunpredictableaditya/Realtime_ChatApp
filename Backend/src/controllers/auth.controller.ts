@@ -78,7 +78,8 @@ const login = asyncHandler(async(req: Request, res: Response): Promise<void> => 
     .status(200)
     .cookie("accessToken", accessToken, {
         httpOnly: true,
-
+        secure: false,
+        sameSite: 'lax',
     })
     .json(new APIResponse(200, loggedUser, "User LoggedIn SuccessFully!"))
 })
