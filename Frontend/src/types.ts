@@ -1,6 +1,7 @@
 import type { Dispatch, SetStateAction } from "react"
 
 interface User {
+    __v?: Number
     _id: string
     fullname: string
     username: string

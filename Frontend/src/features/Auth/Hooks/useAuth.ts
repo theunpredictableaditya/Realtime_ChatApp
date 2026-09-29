@@ -11,7 +11,7 @@ export const useAuth = () => {
     }
 
 
-    const { user, setUser, setLoading, setError } = context
+    const { user, loading, setUser, setLoading, setError } = context
 
     const handleRegister = async({username, fullname, email, password}: RegisterUserArgument) => {
         setLoading(true)
@@ -86,6 +86,7 @@ export const useAuth = () => {
 
     return {
         user,
+        loading,
         handleRegister,
         handleLogin,
         handleGetMe,
