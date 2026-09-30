@@ -35,13 +35,15 @@ const Login = () => {
       try {
         const response: UserAuthResponse = await handleLogin(data);
 
-        toast.success(
-          "Account LoggedIn Successfully!",
-          {
-            duration: 2000,
-            position: "top-center",
-          },
-        );
+        if(response){
+          toast.success(
+            "Account LoggedIn Successfully!",
+            {
+              duration: 2000,
+              position: "top-center",
+            },
+          );
+        }
 
         setTimeout(() => {
           navigate("/chats");
