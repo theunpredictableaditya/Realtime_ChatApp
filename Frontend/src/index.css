@@ -91,3 +91,53 @@
   --transition-normal: 250ms ease;
   --transition-slow: 350ms ease;
 }
+
+@theme inline {
+  --color-primary: var(--color-primary);
+  --color-primary-hover: var(--color-primary-hover);
+  --color-background: var(--color-background);
+  --color-surface: var(--color-surface);
+  --color-surface-light: var(--color-surface-light);
+  --color-border: var(--color-border);
+  --color-text-primary: var(--color-text-primary);
+  --color-text-secondary: var(--color-text-secondary);
+  --color-text-muted: var(--color-text-muted);
+  --color-message-sent: var(--color-message-sent);
+  --color-message-received: var(--color-message-received);
+  --color-online: var(--color-online);
+  --color-offline: var(--color-offline);
+  --color-danger: var(--color-danger);
+  --color-warning: var(--color-warning);
+  --color-success: var(--color-success);
+
+  --font-sans: var(--font-family);
+  --text-xs: var(--font-size-xs);
+  --text-sm: var(--font-size-sm);
+  --text-md: var(--font-size-md);
+  --text-lg: var(--font-size-lg);
+  --text-xl: var(--font-size-xl);
+
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+  --radius-full: var(--radius-full);
+
+  --spacing-xs: var(--space-xs);
+  --spacing-sm: var(--space-sm);
+  --spacing-md: var(--space-md);
+  --spacing-lg: var(--space-lg);
+  --spacing-xl: var(--space-xl);
+
+  --shadow-sm: var(--shadow-sm);
+  --shadow-md: var(--shadow-md);
+  --shadow-lg: var(--shadow-lg);
+
+  --sidebar-width: var(--sidebar-width);
+  --header-height: var(--header-height);
+  --input-height: var(--input-height);
+
+  --transition-fast: var(--transition-fast);
+  --transition-normal: var(--transition-normal);
+  --transition-slow: var(--transition-slow);
+}

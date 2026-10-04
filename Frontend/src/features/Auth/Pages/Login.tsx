@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import z from "zod";
@@ -121,12 +121,12 @@ const Login = () => {
 
         <div className="text-center text-(--font-size-sm) text-(--color-text-secondary)">
           Don&apos;t have an account?{" "}
-          <a
-            href="/"
+          <Link
+            to="/"
             className="font-medium text-(--color-primary) transition-colors duration-150 hover:text-(--color-primary-hover) hover:underline"
           >
             Create one
-          </a>
+          </Link>
         </div>
       </form>
     </div>

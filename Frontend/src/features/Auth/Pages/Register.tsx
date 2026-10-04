@@ -4,7 +4,7 @@ import z from "zod";
 import FieldError from "../Components/FieldError";
 import { useAuth } from "../Hooks/useAuth";
 import type { UserAuthResponse } from "../../../types";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import toast from "react-hot-toast";
 
 const schema = z.object({
@@ -63,27 +63,27 @@ function Register() {
   return (
     <div
       id="register"
-      className="flex min-h-screen w-full items-center justify-center bg-(--color-background) p-(--space-md) font-(--font-family) text-(--color-text-primary)"
+      className="flex min-h-screen w-full items-center justify-center bg-background p-md font-sans text-text-primary"
     >
       <form
         action=""
         onSubmit={handleSubmit(onSubmit)}
-        className="flex w-full max-w-100 flex-col gap-(--space-lg) rounded-(--radius-lg) bg-(--color-surface) p-(--space-xl) shadow-(--shadow-lg)"
+        className="flex w-full max-w-100 flex-col gap-lg rounded-lg bg-surface p-xl shadow-lg"
       >
         <div className="text-center">
-          <h1 className="mb-(--space-xs) text-(--font-size-xl) font-semibold">
+          <h1 className="mb-xs text-xl font-semibold">
             Create an Account
           </h1>
-          <p className="text-(--font-size-sm) text-(--color-text-secondary)">
+          <p className="text-sm text-text-secondary">
             Join us today to get started.
           </p>
         </div>
 
         <div>
-          <div className="flex min-h-20 flex-col gap-(--space-xs)">
+          <div className="flex min-h-20 flex-col gap-xs">
             <label
               htmlFor="fullname"
-              className="text-(--font-size-sm) font-medium text-(--color-text-secondary)"
+              className="text-sm font-medium text-text-secondary"
             >
               Full Name
             </label>
@@ -92,17 +92,17 @@ function Register() {
               type="text"
               placeholder="John Doe"
               {...register("fullname")}
-              className="w-full rounded-(--radius-md) border border-(--color-border) bg-(--color-surface-light) p-(--space-md) text-(--font-size-md) text-(--color-text-primary) outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-(--color-text-muted) focus:border-(--color-primary) focus:shadow-[0_0_0_2px_rgb(99_102_241_/_0.2)]"
+              className="w-full rounded-md border border-border bg-surface-light p-md text-md text-text-primary outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-text-muted focus:border-primary focus:shadow-[0_0_0_2px_rgb(99_102_241/0.2)]"
             />
             {errors.fullname?.message && (
               <FieldError error={errors.fullname.message} />
             )}
           </div>
 
-          <div className="flex min-h-20 flex-col gap-(--space-xs)">
+          <div className="flex min-h-20 flex-col gap-xs">
             <label
               htmlFor="username"
-              className="text-(--font-size-sm) font-medium text-(--color-text-secondary)"
+              className="text-sm font-medium text-text-secondary"
             >
               Username
             </label>
@@ -111,17 +111,17 @@ function Register() {
               type="text"
               placeholder="johndoe123"
               {...register("username")}
-              className="w-full rounded-(--radius-md) border border-(--color-border) bg-(--color-surface-light) p-(--space-md) text-(--font-size-md) text-(--color-text-primary) outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-(--color-text-muted) focus:border-(--color-primary) focus:shadow-[0_0_0_2px_rgb(99_102_241_/_0.2)]"
+              className="w-full rounded-md border border-border bg-surface-light p-md text-md text-text-primary outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-text-muted focus:border-primary focus:shadow-[0_0_0_2px_rgb(99_102_241/0.2)]"
             />
             {errors.username?.message && (
               <FieldError error={errors.username.message} />
             )}
           </div>
 
-          <div className="flex min-h-20 flex-col gap-(--space-xs)">
+          <div className="flex min-h-20 flex-col gap-xs">
             <label
               htmlFor="email"
-              className="text-(--font-size-sm) font-medium text-(--color-text-secondary)"
+              className="text-sm font-medium text-text-secondary"
             >
               Email
             </label>
@@ -130,17 +130,17 @@ function Register() {
               type="email"
               placeholder="john@example.com"
               {...register("email")}
-              className="w-full rounded-(--radius-md) border border-(--color-border) bg-(--color-surface-light) p-(--space-md) text-(--font-size-md) text-(--color-text-primary) outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-(--color-text-muted) focus:border-(--color-primary) focus:shadow-[0_0_0_2px_rgb(99_102_241_/_0.2)]"
+              className="w-full rounded-md border border-border bg-surface-light p-md text-md text-text-primary outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-text-muted focus:border-primary focus:shadow-[0_0_0_2px_rgb(99_102_241/0.2)]"
             />
             {errors.email?.message && (
               <FieldError error={errors.email.message} />
             )}
           </div>
 
-          <div className="flex min-h-20 flex-col gap-(--space-xs)">
+          <div className="flex min-h-20 flex-col gap-xs">
             <label
               htmlFor="password"
-              className="text-(--font-size-sm) font-medium text-(--color-text-secondary)"
+              className="text-sm font-medium text-text-secondary"
             >
               Password
             </label>
@@ -149,7 +149,7 @@ function Register() {
               type="password"
               placeholder="********"
               {...register("password")}
-              className="w-full rounded-(--radius-md) border border-(--color-border) bg-(--color-surface-light) p-(--space-md) text-(--font-size-md) text-(--color-text-primary) outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-(--color-text-muted) focus:border-(--color-primary) focus:shadow-[0_0_0_2px_rgb(99_102_241_/_0.2)]"
+              className="w-full rounded-md border border-border bg-surface-light p-md text-md text-text-primary outline-none transition-[border-color,box-shadow] duration-150 placeholder:text-text-muted focus:border-primary focus:shadow-[0_0_0_2px_rgb(99_102_241/0.2)]"
             />
             {errors.password?.message && (
               <FieldError error={errors.password.message} />
@@ -158,20 +158,20 @@ function Register() {
 
           <button
             type="submit"
-            className="mt-(--space-sm) w-full rounded-(--radius-md) bg-(--color-primary) p-(--space-md) text-(--font-size-md) font-semibold text-white transition-colors duration-150 hover:bg-(--color-primary-hover) active:scale-[0.98]"
+            className="mt-sm w-full rounded-md bg-primary p-md text-md font-semibold text-white transition-colors duration-150 hover:bg-primary-hover active:scale-[0.98]"
           >
             Register
           </button>
         </div>
 
-        <div className="text-center text-(--font-size-sm) text-(--color-text-secondary)">
+        <div className="text-center text-sm text-text-secondary">
           Already have an account?{" "}
-          <a
-            href="/login"
-            className="font-medium text-(--color-primary) transition-colors duration-150 hover:text-(--color-primary-hover) hover:underline"
+          <Link
+            to="/login"
+            className="font-medium text-primary transition-colors duration-150 hover:text-primary-hover hover:underline"
           >
             Login
-          </a>
+          </Link>
         </div>
       </form>
     </div>
