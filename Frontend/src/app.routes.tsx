@@ -1,6 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Register from "./features/Auth/Pages/Register";
-import Chat from "./features/Chat/Pages/Chat";
+import Chat from "./features/Chats/Pages/Chat";
 import Login from "./features/Auth/Pages/Login";
 import ProtectedRoute from "./ProtectedRoute";
 import PublicRoute from "./PublicRoute";
