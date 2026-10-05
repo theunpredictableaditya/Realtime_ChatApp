@@ -3,6 +3,7 @@ import mongoose, {Schema, Document, Types} from 'mongoose'
 interface ConversationDocument extends Document {
     type : 'direct' | 'group';
     participants: Types.ObjectId[];
+    lastMessage: Types.ObjectId;
     name?: string;
     createdAt: Date;
     updatedAt: Date;
@@ -19,6 +20,11 @@ const ConversationSchema = new Schema<ConversationDocument>({
         ref: 'USER',
         required: true,
     }],
+    lastMessage: {
+        type: Schema.Types.ObjectId,
+        ref: "MESSAGE",
+        default: null
+    },
     name: {
         type: String,
         trim: true

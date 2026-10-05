@@ -23,6 +23,13 @@ const getConversations = asyncHandler(async(req: AuthRequest, res: Response): Pr
         "participants",
         "fullname username"
     )
+    .populate(
+        "lastMessage",
+        "content sender messageType createdAt"
+    )
+    .sort({
+        updatedAt: -1
+    })
 
     res
     .status(200)

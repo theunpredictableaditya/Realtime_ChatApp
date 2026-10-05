@@ -74,6 +74,10 @@ const sendMessage = asyncHandler(async (req: AuthRequest, res: Response): Promis
 
     const message = await MessageCreateFunction(conversation._id, senderId, content.trim())
 
+    await conversationModel.findByIdAndUpdate(conversation._id, {
+        lastMessage: message._id
+    })
+
     res
     .status(201)
     .json(new APIResponse(201, message, "Message Delivered Successfully!"))
