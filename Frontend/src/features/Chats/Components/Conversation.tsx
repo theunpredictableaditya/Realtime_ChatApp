@@ -61,32 +61,32 @@ const Conversation = () => {
   };
 
   return (
-    <main className="flex min-w-0 flex-1 flex-col bg-(color:--color-background)">
-      <header className="flex h-[var(--header-height)] shrink-0 items-center justify-between border-b border-(color:--color-border) bg-(color:--color-surface) px-6">
+    <main className="flex min-w-0 flex-1 flex-col bg-background">
+      <header className="flex h-(--header-height) shrink-0 items-center justify-between border-b border-border bg-surface px-6">
         <div className="flex items-center">
           <div className="relative mr-3 size-10 shrink-0">
             <img
               src="https://placehold.co/100x100/6366f1/ffffff?text=ES"
               alt="Elena Smith"
-              className="size-full rounded-(length:--radius-full) object-cover"
+              className="size-full rounded-full object-cover"
             />
             <span
               aria-label="Online"
-              className="absolute right-0 bottom-0 size-3 rounded-(length:--radius-full) border-2 border-(color:--color-surface) bg-(color:--color-online)"
+              className="absolute right-0 bottom-0 size-3 rounded-full border-2 border-surface bg-online"
             />
           </div>
           <div>
-            <p className="text-base font-semibold text-(color:--color-text-primary)">
+            <p className="text-base font-semibold text-text-primary">
               Elena Smith
             </p>
-            <p className="text-xs text-(color:--color-online)">Online</p>
+            <p className="text-xs text-online">Online</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
           <button
             type="button"
             aria-label="Call Elena Smith"
-            className="flex size-9 items-center justify-center rounded-(length:--radius-full) text-(color:--color-text-secondary) transition-colors hover:bg-(color:--color-surface-light) hover:text-(color:--color-text-primary)"
+            className="flex size-9 items-center justify-center rounded-full text-text-secondary transition-colors hover:bg-surface-light hover:text-text-primary"
           >
             <svg
               aria-hidden="true"
@@ -104,7 +104,7 @@ const Conversation = () => {
           <button
             type="button"
             aria-label="More conversation options"
-            className="flex size-9 items-center justify-center rounded-(length:--radius-full) text-(color:--color-text-secondary) transition-colors hover:bg-(color:--color-surface-light) hover:text-(color:--color-text-primary)"
+            className="flex size-9 items-center justify-center rounded-full text-text-secondary transition-colors hover:bg-surface-light hover:text-text-primary"
           >
             <svg
               aria-hidden="true"
@@ -131,21 +131,21 @@ const Conversation = () => {
         ))}
         <div
           aria-label="Elena is typing"
-          className="flex w-fit items-center gap-1 rounded-(length:--radius-lg) rounded-bl-none bg-(color:--color-message-received) px-4 py-3"
+          className="flex w-fit items-center gap-1 rounded-lg rounded-bl-none bg-message-received px-4 py-3"
         >
-          <span className="size-1.5 animate-bounce rounded-(length:--radius-full) bg-(color:--color-text-secondary)" />
-          <span className="size-1.5 animate-bounce rounded-(length:--radius-full) bg-(color:--color-text-secondary) [animation-delay:200ms]" />
-          <span className="size-1.5 animate-bounce rounded-(length:--radius-full) bg-(color:--color-text-secondary) [animation-delay:400ms]" />
+          <span className="size-1.5 animate-bounce rounded-full bg-text-secondary" />
+          <span className="size-1.5 animate-bounce rounded-full bg-text-secondary [animation-delay:200ms]" />
+          <span className="size-1.5 animate-bounce rounded-full bg-text-secondary [animation-delay:400ms]" />
         </div>
       </section>
       <form
         onSubmit={sendMessage}
-        className="flex h-[var(--input-height)] shrink-0 items-center gap-4 border-t border-(color:--color-border) bg-(color:--color-surface) px-6"
+        className="flex h-(--input-height) shrink-0 items-center gap-4 border-t border-border bg-surface px-6"
       >
         <button
           type="button"
           aria-label="Attach a file"
-          className="flex size-9 shrink-0 items-center justify-center rounded-(length:--radius-full) text-(color:--color-text-secondary) transition-colors hover:bg-(color:--color-surface-light) hover:text-(color:--color-text-primary)"
+          className="flex size-9 shrink-0 items-center justify-center rounded-full text-text-secondary transition-colors hover:bg-surface-light hover:text-text-primary"
         >
           <svg
             aria-hidden="true"
@@ -169,13 +169,13 @@ const Conversation = () => {
           value={draft}
           onChange={(event) => setDraft(event.target.value)}
           placeholder="Type a message..."
-          className="min-w-0 flex-1 rounded-(length:--radius-full) border border-(color:--color-border) bg-(color:--color-surface-light) px-5 py-3 text-sm text-(color:--color-text-primary) outline-none transition-colors placeholder:text-(color:--color-text-muted) focus:border-(color:--color-primary)"
+          className="min-w-0 flex-1 rounded-full border border-border bg-surface-light px-5 py-3 text-sm text-text-primary outline-none transition-colors placeholder:text-text-muted focus:border-primary"
         />
         <button
           type="submit"
           aria-label="Send message"
           disabled={!draft.trim()}
-          className="flex size-11 shrink-0 items-center justify-center rounded-(length:--radius-full) bg-(color:--color-primary) text-white transition-colors hover:bg-(color:--color-primary-hover) active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
+          className="flex size-11 shrink-0 items-center justify-center rounded-full bg-primary text-white transition-colors hover:bg-primary-hover active:scale-95 disabled:cursor-not-allowed disabled:opacity-60"
         >
           <svg
             aria-hidden="true"

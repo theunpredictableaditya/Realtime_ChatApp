@@ -52,12 +52,12 @@ const Contactbar = () => {
   );
 
   return (
-    <aside className="z-10 flex w-[var(--sidebar-width)] shrink-0 flex-col border-r border-(color:--color-border) bg-(color:--color-surface)">
-      <header className="flex h-[var(--header-height)] shrink-0 items-center border-b border-(color:--color-border) px-6">
-        <h1 className="flex items-center gap-2 text-xl font-semibold text-(color:--color-text-primary)">
+    <aside className="z-10 flex w-(--sidebar-width) shrink-0 flex-col border-r border-border bg-surface">
+      <header className="flex h-(--header-height) shrink-0 items-center border-b border-border px-6">
+        <h1 className="flex items-center gap-2 text-xl font-semibold text-text-primary">
           <svg
             aria-hidden="true"
-            className="size-6 text-(color:--color-primary)"
+            className="size-6 text-primary"
             viewBox="0 0 24 24"
             fill="none"
             stroke="currentColor"
@@ -70,7 +70,7 @@ const Contactbar = () => {
           Messages
         </h1>
       </header>
-      <div className="shrink-0 border-b border-(color:--color-border) p-4">
+      <div className="shrink-0 border-b border-border p-4">
         <label className="sr-only" htmlFor="conversation-search">
           Search conversations
         </label>
@@ -80,7 +80,7 @@ const Contactbar = () => {
           value={search}
           onChange={(event) => setSearch(event.target.value)}
           placeholder="Search conversations..."
-          className="w-full rounded-(length:--radius-md) border border-(color:--color-border) bg-(color:--color-surface-light) px-4 py-2.5 text-sm text-(color:--color-text-primary) outline-none transition-colors placeholder:text-(color:--color-text-muted) focus:border-(color:--color-primary)"
+          className="w-full rounded-md border border-border bg-surface-light px-4 py-2.5 text-sm text-text-primary outline-none transition-colors placeholder:text-text-muted focus:border-primary"
         />
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto">
@@ -89,7 +89,7 @@ const Contactbar = () => {
             <Contact key={contact.name} {...contact} />
           ))
         ) : (
-          <p className="px-5 py-6 text-sm text-(color:--color-text-secondary)">
+          <p className="px-5 py-6 text-sm text-text-secondary">
             No conversations found.
           </p>
         )}
