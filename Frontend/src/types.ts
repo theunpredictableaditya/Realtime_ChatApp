@@ -21,6 +21,15 @@ interface AuthContextType {
     setError :Dispatch<SetStateAction<unknown>>
 }
 
+interface ChatContextType {
+    contacts: null
+    setContacts: Dispatch<SetStateAction<null>>
+    loading: boolean
+    setLoading: Dispatch<SetStateAction<boolean>>
+    error: unknown
+    setError: Dispatch<SetStateAction<unknown>>
+}
+
 interface LoginUserArgument {
     email: string;
     password: string;
@@ -35,6 +44,7 @@ export type{
     User,
     UserAuthResponse,
     AuthContextType,
+    ChatContextType,
     RegisterUserArgument,
     LoginUserArgument
 }
