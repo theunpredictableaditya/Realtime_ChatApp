@@ -1,55 +1,18 @@
 import { useState } from "react";
 import Contact from "./Contact";
-
-interface ContactData {
-  name: string;
-  lastMessage: string;
-  time: string;
-  avatarUrl: string;
-  isOnline: boolean;
-  isActive: boolean;
-}
-
-const contacts: ContactData[] = [
-  {
-    name: "Elena Smith",
-    lastMessage: "Typing...",
-    time: "10:30 AM",
-    avatarUrl: "https://placehold.co/100x100/6366f1/ffffff?text=ES",
-    isOnline: true,
-    isActive: true,
-  },
-  {
-    name: "Marcus Johnson",
-    lastMessage: "Sounds good, talk to you later!",
-    time: "9:42 AM",
-    avatarUrl: "https://placehold.co/100x100/374151/ffffff?text=MJ",
-    isOnline: false,
-    isActive: false,
-  },
-  {
-    name: "Sarah Lee",
-    lastMessage: "Are we still on for the meeting?",
-    time: "Yesterday",
-    avatarUrl: "https://placehold.co/100x100/374151/ffffff?text=SL",
-    isOnline: true,
-    isActive: false,
-  },
-  {
-    name: "David Jones",
-    lastMessage: "I'll send the files over shortly.",
-    time: "Yesterday",
-    avatarUrl: "https://placehold.co/100x100/374151/ffffff?text=DJ",
-    isOnline: false,
-    isActive: false,
-  },
-];
+import { useChat } from "../Hooks/useChat";
 
 const Contactbar = () => {
+  const { contacts } = useChat()
+
   const [search, setSearch] = useState("");
-  const filteredContacts = contacts.filter((contact) =>
+  const filteredContacts = (contacts ?? []).filter((contact) =>
     contact.name.toLowerCase().includes(search.trim().toLowerCase()),
   );
+
+  if(!contacts){
+    return
+  }
 
   return (
     <aside className="z-10 flex w-(--sidebar-width) shrink-0 flex-col border-r border-border bg-surface">
@@ -83,6 +46,7 @@ const Contactbar = () => {
           className="w-full rounded-md border border-border bg-surface-light px-4 py-2.5 text-sm text-text-primary outline-none transition-colors placeholder:text-text-muted focus:border-primary"
         />
       </div>
+
       <div className="min-h-0 flex-1 overflow-y-auto">
         {filteredContacts.length > 0 ? (
           filteredContacts.map((contact) => (
